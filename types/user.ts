@@ -20,5 +20,5 @@ export type LoginRequest = {
 
 export type UpdateUserRequest = {
     userName?: string;
-    photoURL?: string;
+    email: string;
 };

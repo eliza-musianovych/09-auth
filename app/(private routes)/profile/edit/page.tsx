@@ -1,31 +1,32 @@
 'use client';
 
 import css from './EditeProfilePage.module.css';
-import { getMe, updateMe } from "@/lib/api/clientApi";
+import { updateMe } from "@/lib/api/clientApi";
 import { useRouter } from "next/navigation";
-import { useEffect, useState } from "react";
+import {  useState } from "react";
 import Image from "next/image";
+import { useAuthStore } from '@/lib/store/authStore';
+import { UpdateUserRequest } from '@/types/user';
 
 const EditProfile = () => {
     const router = useRouter();
-    const [userName, setUserName] = useState('');
-    const [userEmail, setUserEmail] = useState('');
+    const { user, setUser } = useAuthStore();
+    const [error, setError] = useState<boolean>(false);
 
-    useEffect(() => {
-        getMe().then((user) => {
-            setUserName(user.userName ?? '');
-            setUserEmail(user.email ?? '')
-        })
-    }, []);
+    const handleChange = async(formData: FormData) => {
+      try {
+        const userName = Object.fromEntries(formData) as UpdateUserRequest;
 
-    const handleChange = (event: React.ChangeEvent<HTMLInputElement>) => {
-        setUserName(event.target.value);
-    };
+        const updateUser = await updateMe(userName);
 
-    const handleSave = async(event: React.FormEvent<HTMLFormElement>) => {
-        event.preventDefault();
-        await updateMe({userName});
-        router.push('/profile');
+        if (updateUser) {
+          setUser(updateUser);
+          router.push('/profile');
+        }
+      } catch(error) {
+        console.log(error);
+        setError(true);
+      }
     };
 
     const handleCancel = () => {
@@ -44,18 +45,25 @@ const EditProfile = () => {
       className={css.avatar}
     />
 
-    <form className={css.profileInfo} onSubmit={handleSave}>
+    <form className={css.profileInfo} 
+    onSubmit={async (e) => {
+      e.preventDefault();
+      const formData = new FormData(e.currentTarget);
+      await handleChange(formData);
+    }}>
       <div className={css.usernameWrapper}>
         <label htmlFor="username">Username:</label>
         <input id="username"
+          name='userName'
           type="text"
-          value={userName}
+          defaultValue={user?.userName}
           className={css.input}
-          onChange={handleChange}
         />
       </div>
 
-      <p>Email: {userEmail}</p>
+      <p>Email: {user?.email}</p>
+
+      {error && <p className={css.error}>Failed to update profile data. Please try again later.</p>}
 
       <div className={css.actions}>
         <button type="submit" className={css.saveButton}>

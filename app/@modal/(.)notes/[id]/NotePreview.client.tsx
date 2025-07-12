@@ -9,11 +9,10 @@ import NotePreview from '@/components/NotePreview/NotePreview';
 export default function NoteDetailsClient() {
     const router = useRouter();
     const { id } = useParams<{ id: string }>();
-    const numericId = Number(id);
 
     const {data: note, isLoading, error} = useQuery({
-        queryKey: ['notes', numericId],
-        queryFn: () => fetchNoteById(numericId),
+        queryKey: ['notes', id],
+        queryFn: () => fetchNoteById(id),
         refetchOnMount: false,
     });
 
