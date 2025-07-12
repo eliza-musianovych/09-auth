@@ -1,6 +1,6 @@
-import { NextResponse } from "next/server";
-import { cookies } from "next/headers";
-import { api } from "../../api";
+import { NextResponse } from 'next/server';
+import { api } from '../../api';
+import { cookies } from 'next/headers';
 
 type Props = {
   params: Promise<{ id: string }>;
@@ -9,19 +9,16 @@ type Props = {
 export async function GET(request: Request, { params }: Props) {
   const cookieStore = await cookies();
   const { id } = await params;
-
-  try {
-    await api.get(`/notes/${id}`, {
-      headers: {
-        Cookie: cookieStore.toString(),
-      },
-    });
-    return NextResponse.json({ message: 'Note detail get successfully' }, { status: 200 });
-  } catch (error) {
-    console.error('Error getting note detail:', error);
-    return NextResponse.json({ error: 'Failed to get note detail' }, { status: 500 });
+  const { data } = await api(`/notes/${id}`, {
+    headers: {
+      Cookie: cookieStore.toString(),
+    },
+  });
+  if (data) {
+    return NextResponse.json(data);
   }
-}; 
+  return NextResponse.json({ error: 'Failed to fetch note' }, { status: 500 });
+}
 
 export async function DELETE(request: Request, { params }: Props) {
   const cookieStore = await cookies();
