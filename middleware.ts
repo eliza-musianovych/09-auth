@@ -34,7 +34,7 @@ export async function middleware(request: NextRequest) {
                     if (parsed.refreshToken) cookieStore.set('refreshToken', parsed.refreshToken, options);
                 }
             if (isPublicRoute) {
-                return NextResponse.redirect(new URL('/', request.url), {
+                return NextResponse.redirect(new URL('/profile', request.url), {
                     headers: {
                         Cookie: cookieStore.toString(),
                     }
@@ -56,7 +56,7 @@ export async function middleware(request: NextRequest) {
         }
 
         if (isPrivateRoute) {
-            return NextResponse.redirect(new URL('/', request.url));
+            return NextResponse.redirect(new URL('/sign-in', request.url));
         }
     }
 
@@ -71,5 +71,5 @@ export async function middleware(request: NextRequest) {
 }
 
 export const config = {
-    matcher: ['/profile'],
+    matcher: ['/profile/:path*', '/sign-in', '/sign-up', '/notes/:path*'],
 };
