@@ -11,8 +11,8 @@ export default async function NoteModal({params}: Props) {
     const queryClient = new QueryClient();
 
     await queryClient.prefetchQuery({
-        queryKey: ['note', Number(id)],
-        queryFn: () => fetchNoteById(Number(id)),
+        queryKey: ['note', id],
+        queryFn: () => fetchNoteById(id),
     });
     return (
         <HydrationBoundary state={dehydrate(queryClient)}>
