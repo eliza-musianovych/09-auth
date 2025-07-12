@@ -38,12 +38,14 @@ const EditProfile = () => {
   <div className={css.profileCard}>
     <h1 className={css.formTitle}>Edit Profile</h1>
 
-    <Image src="/avatar.jpg"
+    {user && <Image 
+      src={user?.avatar}
       alt="User Avatar"
       width={120}
       height={120}
       className={css.avatar}
     />
+    }
 
     <form className={css.profileInfo} 
     onSubmit={async (e) => {

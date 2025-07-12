@@ -2,7 +2,7 @@ import { cookies } from "next/headers";
 import { nextServer } from './api';
 import { User } from "@/types/user";
 import { NotesHttpResponse } from "@/types/note";
-import { Tag } from "@/types/note";
+import { Tag, Note } from "@/types/note";
 
 export const fetchNotesServer = async (
     query?: string, 
@@ -19,6 +19,16 @@ export const fetchNotesServer = async (
     const response = await nextServer.get('/notes', {
         params: parameters,
         headers: { 
+            Cookie: cookieStore.toString(),
+        },
+    });
+    return response.data;
+};
+
+export const fetchNoteByIdServer = async(id: string): Promise<Note> => {
+    const cookieStore = await cookies();
+    const response = await nextServer.get<Note>(`/note/${id}`, {
+        headers: {
             Cookie: cookieStore.toString(),
         },
     });
