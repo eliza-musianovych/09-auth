@@ -15,9 +15,9 @@ const EditProfile = () => {
 
     const handleChange = async(formData: FormData) => {
       try {
-        const userName = Object.fromEntries(formData) as UpdateUserRequest;
+        const username = Object.fromEntries(formData) as UpdateUserRequest;
 
-        const updateUser = await updateMe(userName);
+        const updateUser = await updateMe(username);
 
         if (updateUser) {
           setUser(updateUser);
@@ -54,9 +54,9 @@ const EditProfile = () => {
       <div className={css.usernameWrapper}>
         <label htmlFor="username">Username:</label>
         <input id="username"
-          name='userName'
+          name='username'
           type="text"
-          defaultValue={user?.userName}
+          defaultValue={user?.username}
           className={css.input}
         />
       </div>

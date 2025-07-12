@@ -1,7 +1,7 @@
 export interface User {
     id: string;
     email: string;
-    userName?: string;
+    username?: string;
     photoUrl?: string;
     createdAt: Date;
     updatedAt: Date;
@@ -10,7 +10,7 @@ export interface User {
 export type RegisterRequest = {
     email: string;
     password: string;
-    userName: string;
+    username: string;
 };
 
 export type LoginRequest = {
@@ -19,6 +19,6 @@ export type LoginRequest = {
 };
 
 export type UpdateUserRequest = {
-    userName?: string;
+    username?: string;
     email: string;
 };
