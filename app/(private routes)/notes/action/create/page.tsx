@@ -1,6 +1,6 @@
 import css from './CreateNote.module.css'
 import NoteForm from '@/components/NoteForm/NoteForm';
-import { tags } from '@/lib/api';
+import { tags } from '@/lib/api/clientApi';
 import { Metadata } from 'next';
 
 export const metadata: Metadata = {

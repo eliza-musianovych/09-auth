@@ -1,5 +1,5 @@
 export interface Note {
-    id: number;
+    id: string;
     title: string;
     content: string;
     tag: string;
@@ -14,3 +14,8 @@ export type NewNote = {
 };
 
 export type Tag = 'Todo' | 'Work' | 'Personal' | 'Meeting' | 'Shopping';
+
+export interface NotesHttpResponse {
+    notes: Note[];
+    totalPages: number;
+}

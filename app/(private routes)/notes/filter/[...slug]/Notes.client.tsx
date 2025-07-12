@@ -7,7 +7,7 @@ import SearchBox from '@/components/SearchBox/SearchBox'
 import type { Note, Tag } from '@/types/note';
 import { useState } from 'react'
 import { useDebounce } from 'use-debounce';
-import { fetchNotes } from '@/lib/api';
+import { fetchNotes } from '@/lib/api/clientApi';
 import { keepPreviousData, useQuery } from '@tanstack/react-query';
 import Link from 'next/link';
 

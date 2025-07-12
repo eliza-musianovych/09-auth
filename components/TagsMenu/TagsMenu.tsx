@@ -1,9 +1,9 @@
 'use client'
 
 import Link from 'next/link';
-import css from './TagsMenu.module.css'
+import css from './TagsMenu.module.css';
+import { tags } from '@/lib/api/clientApi';
 import { useState } from 'react';
-import { tags } from '@/lib/api'
 
 const TagsMenu = () => {
     const [isOpen, setIsOpen] = useState<boolean>(false);

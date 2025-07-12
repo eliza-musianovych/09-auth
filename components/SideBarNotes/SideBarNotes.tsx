@@ -1,6 +1,6 @@
 import css from './SideBarNotes.module.css'
 import Link from 'next/link';
-import { tags } from '@/lib/api';
+import { tags } from '@/lib/api/clientApi';
 
 const SideBarNotes = () => {
     return (
